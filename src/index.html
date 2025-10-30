@@ -6,6 +6,7 @@
     <title>भारत कैलेंडर - होम</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.min.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -48,7 +49,7 @@
             <div class="menu-item" onclick="alert('मौसम')"><i class="fas fa-cloud"></i><span>मौसम (मो)</span></div>
             <div class="menu-item" onclick="shareApp()"><i class="fas fa-share-nodes"></i><span>शेयर</span></div>
             <div class="menu-item" onclick="alert('अनुवाद सहायता')"><i class="fas fa-language"></i><span>अनुवाद करने में हमारी मदद करें</span></div>
-            <div class="menu-item" onclick="openInstagram()"><i class="fab fa-instagram"></i><span>इंस्टाग्राम</span></div>
+            <!-- <div class="menu-item" onclick="openInstagram()"><i class="fab fa-instagram"></i><span>इंस्टाग्राम</span></div> -->
         </div>
     </div>
 
@@ -78,13 +79,36 @@
             </div>
         </div>
 
-        <!-- Week Calendar -->
-        <div class="week-calendar" id="weekCalendar"></div>
+        <!-- Week Calendar with NEW Design -->
+        <div class="week-calendar" id="calendarContainer">
+            <div class="week-days">
+                <div>रवि</div>
+                <div>सोम</div>
+                <div>मंगल</div>
+                <div>बुध</div>
+                <div>गुरु</div>
+                <div>शुक्र</div>
+                <div>शनि</div>
+            </div>
+            <div class="calendar-drag-handle" id="calendarDragHandle">
+                <div class="drag-indicator"></div>
+            </div>
+            <div class="week-dates" id="weekCalendar"></div>
+        </div>
 
         <div style="text-align:center;padding:1rem;"><h2 class="section-title">आज पंचांग</h2></div>
 
         <!-- Panchang Card -->
         <div class="panchang-card" id="panchangCard"></div>
+
+        <!-- Choghadiya Section -->
+        <div class="choghadiya-section">
+            <h2 class="section-title">चौघड़िया</h2>
+            <div id="choghadiyaSection"></div>
+        </div>
+
+        <!-- Event Promotion -->
+        <div style="padding: 1rem;" id="eventPromotion"></div>
 
         <!-- Trending Status -->
         <div class="trending-section">
@@ -93,8 +117,21 @@
 
             <h2 class="section-title">आज का राशिफल</h2>
             <div class="trending-scroll" id="rashifalScroll"></div>
+            <div id="rashifalDetails"></div>
+
+            <h2 class="section-title">म्यूजिक</h2>
+            <div class="trending-scroll" id="musicSection"></div>
+
+            <!-- Feature Cards Grid -->
+            <div class="feature-cards-container" id="featureCardsGrid"></div>
+
+            <!-- Support Section -->
+            <div id="supportSection"></div>
         </div>
     </div>
+
+    <!-- Date Details Dialog -->
+    <div id="dateDialog" style="display:none;"></div>
 
     <!-- Plus Button Modal -->
     <div class="modal" id="plusModal">
@@ -139,6 +176,7 @@
     <button class="fab shopping-cart" onclick="alert('शॉपिंग कार्ट')"><i class="fas fa-shopping-cart"></i></button>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script src="js/routes.js"></script>
     <script src="js/calendar-data.js"></script>
     <script src="js/home.js"></script>

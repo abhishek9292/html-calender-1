@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>भाषा चुनें</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="calendar-header">
+        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+        <div class="calendar-title"><h1 class="title has-text-white" style="font-size:1.1rem;margin:0;">भाषा चुनें</h1></div>
+        <div></div>
+    </div>
+
+    <div style="padding:1rem;">
+        <p style="color:#7a7a7a;margin-bottom:1.5rem;">अपनी पसंदीदा भाषा चुनें</p>
+
+        <div id="languageList"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/routes.js"></script>
+    <script>
+        const languages = [
+            { name: 'हिन्दी', code: 'hi', selected: true },
+            { name: 'English', code: 'en', selected: false },
+            { name: 'मराठी', code: 'mr', selected: false },
+            { name: 'ગુજરાતી', code: 'gu', selected: false },
+            { name: 'বাংলা', code: 'bn', selected: false },
+            { name: 'தமிழ்', code: 'ta', selected: false },
+            { name: 'తెలుగు', code: 'te', selected: false },
+            { name: 'ಕನ್ನಡ', code: 'kn', selected: false },
+            { name: 'മലയാളം', code: 'ml', selected: false },
+            { name: 'ਪੰਜਾਬੀ', code: 'pa', selected: false }
+        ];
+
+        $(document).ready(function() {
+            let html = '';
+            languages.forEach(lang => {
+                html += `<div class="box" style="margin-bottom:1rem;cursor:pointer;${lang.selected ? 'background:#fce4ec;border:2px solid #f14668;' : ''}" onclick="selectLanguage('${lang.code}', '${lang.name}')">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <div style="display:flex;align-items:center;gap:1rem;">
+                            <i class="fas fa-language" style="font-size:1.5rem;color:#f14668;"></i>
+                            <p style="font-weight:700;font-size:1.1rem;">${lang.name}</p>
+                        </div>
+                        ${lang.selected ? '<i class="fas fa-check-circle" style="color:#f14668;font-size:1.5rem;"></i>' : ''}
+                    </div>
+                </div>`;
+            });
+            $('#languageList').html(html);
+        });
+
+        function selectLanguage(code, name) {
+            alert(`भाषा बदली गई: ${name}\n\nयह सुविधा जल्द ही उपलब्ध होगी।`);
+            setTimeout(() => goBack(), 500);
+        }
+    </script>
+</body>
+</html>

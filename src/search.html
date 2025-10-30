@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>खोज</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="search-header">
+        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+        <h1 class="title">खोज</h1>
+    </div>
+
+    <div class="search-box">
+        <div class="field has-addons">
+            <div class="control is-expanded has-icons-left">
+                <input class="input" type="text" placeholder="खोज" id="searchInput">
+                <span class="icon is-left"><i class="fas fa-search"></i></span>
+            </div>
+            <div class="control">
+                <button class="button" id="clearBtn"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="control">
+                <button class="button is-dark">खोज</button>
+            </div>
+        </div>
+
+        <div class="tabs is-centered">
+            <ul>
+                <li><a>लोग</a></li>
+                <li class="is-active"><a>इवेंट्स</a></li>
+            </ul>
+        </div>
+
+        <div class="search-results" id="searchResults">
+            <p class="has-text-centered has-text-grey" style="padding:3rem 0;">पोस्ट उपलब्ध नहीं हैं</p>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/routes.js"></script>
+    <script>
+        $('#clearBtn').click(function() { $('#searchInput').val(''); });
+        $('#searchInput').on('input', function() {
+            if ($(this).val().length > 0) {
+                $('#searchResults').html('<p class="has-text-centered">खोज रहा है...</p>');
+            } else {
+                $('#searchResults').html('<p class="has-text-centered has-text-grey" style="padding:3rem 0;">पोस्ट उपलब्ध नहीं हैं</p>');
+            }
+        });
+    </script>
+</body>
+</html>

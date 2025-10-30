@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>छुट्टियां</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="calendar-header">
+        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+        <div class="calendar-title"><h1 class="title has-text-white" style="font-size:1.1rem;margin:0;">छुट्टियां</h1></div>
+        <i class="fas fa-search" onclick="navigateTo('search')" style="cursor:pointer;"></i>
+    </div>
+
+    <div style="padding:1rem;">
+        <div class="tabs is-fullwidth">
+            <ul>
+                <li class="is-active"><a>राष्ट्रीय</a></li>
+                <li><a>राज्य</a></li>
+                <li><a>बैंक</a></li>
+                <li><a>स्कूल</a></li>
+            </ul>
+        </div>
+
+        <h2 class="section-title">अक्टूबर 2025 - छुट्टियां</h2>
+        <div id="holidaysList"></div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a class="nav-item" onclick="navigateTo('home')"><i class="fas fa-home"></i><span>होम</span></a>
+        <a class="nav-item" onclick="navigateTo('calendar')"><i class="fas fa-calendar"></i><span>कैलेंडर</span></a>
+        <a class="nav-item plus-btn" onclick="$('#plusModal').addClass('is-active')"><i class="fas fa-plus"></i></a>
+        <a class="nav-item" onclick="navigateTo('music')"><i class="fas fa-music"></i><span>म्यूजिक</span></a>
+        <a class="nav-item" onclick="navigateTo('ayojan')"><i class="fas fa-calendar-check"></i><span>आयोजन</span></a>
+    </nav>
+
+    <div class="modal" id="plusModal">
+        <div class="modal-background" onclick="$('#plusModal').removeClass('is-active')"></div>
+        <div class="modal-content plus-modal-content">
+            <div class="plus-option" onclick="alert('नोट्स')"><i class="fas fa-sticky-note"></i><span>नोट्स</span></div>
+            <div class="plus-option" onclick="navigateTo('event')"><i class="far fa-calendar"></i><span>इवेंट्स</span></div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/calendar-data.js"></script>
+    <script>
+        $(document).ready(function() {
+            const nationalHolidays = calendarData.festivals.filter(f => f.type === 'राष्ट्रीय अवकाश');
+            let html = '';
+            calendarData.festivals.forEach(holiday => {
+                html += `<div class="box" style="margin-bottom:1rem;background:#fff8e1;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <div>
+                            <div style="display:flex;align-items:center;gap:1rem;">
+                                <div style="width:50px;height:50px;background:#f14668;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;">
+                                    ${holiday.date}
+                                </div>
+                                <div>
+                                    <p style="font-weight:700;font-size:1.1rem;">${holiday.name}</p>
+                                    <p style="color:#7a7a7a;font-size:0.85rem;">अक्टूबर 2025</p>
+                                </div>
+                            </div>
+                        </div>
+                        <i class="fas fa-umbrella-beach" style="font-size:1.5rem;color:#f14668;"></i>
+                    </div>
+                </div>`;
+            });
+            $('#holidaysList').html(html);
+        });
+    </script>
+</body>
+</html>

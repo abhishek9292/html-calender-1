@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>शुभ मुहूर्त</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="muhurat-header">
+        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+        <h1 class="title has-text-white" style="font-size:1.2rem;margin:0;">शुभ मुहूर्त</h1>
+        <i class="fas fa-share-nodes" onclick="alert('शेयर')" style="cursor:pointer;"></i>
+    </div>
+
+    <div class="calendar-nav">
+        <button class="nav-arrow"><i class="fas fa-chevron-left"></i></button>
+        <div class="month-display">अक्टूबर, 2025</div>
+        <button class="nav-arrow"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <div class="muhurat-tabs" id="muhurtTabs"></div>
+
+    <div class="muhurat-content" id="muhurtContent" style="padding-bottom:2rem;"></div>
+
+    <nav class="bottom-nav">
+        <a class="nav-item" onclick="navigateTo('home')"><i class="fas fa-home"></i><span>होम</span></a>
+        <a class="nav-item" onclick="navigateTo('calendar')"><i class="fas fa-calendar"></i><span>कैलेंडर</span></a>
+        <a class="nav-item plus-btn" onclick="$('#plusModal').addClass('is-active')"><i class="fas fa-plus"></i></a>
+        <a class="nav-item" onclick="navigateTo('music')"><i class="fas fa-music"></i><span>म्यूजिक</span></a>
+        <a class="nav-item" onclick="navigateTo('ayojan')"><i class="fas fa-calendar-check"></i><span>आयोजन</span></a>
+    </nav>
+
+    <div class="modal" id="plusModal">
+        <div class="modal-background" onclick="$('#plusModal').removeClass('is-active')"></div>
+        <div class="modal-content plus-modal-content">
+            <div class="plus-option" onclick="alert('छुट्टियां')"><i class="fas fa-umbrella-beach"></i><span>छुट्टियां</span></div>
+            <div class="plus-option" onclick="alert('नोट्स')"><i class="fas fa-sticky-note"></i><span>नोट्स</span></div>
+            <div class="plus-option" onclick="alert('चेक लिस्ट')"><i class="fas fa-check-square"></i><span>चेक लिस्ट</span></div>
+            <div class="plus-option" onclick="navigateTo('event')"><i class="far fa-calendar"></i><span>इवेंट्स</span></div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/calendar-data.js"></script>
+    <script>
+        $(document).ready(function() {
+            renderMuhurtTabs();
+            renderMuhurtContent('vehicle');
+        });
+
+        function renderMuhurtTabs() {
+            let html = '';
+            calendarData.muhurat.categories.forEach((cat, idx) => {
+                html += `<div class="muhurat-tab ${idx === 0 ? 'active' : ''}" onclick="selectCategory('${cat}', this)">${cat}</div>`;
+            });
+            $('#muhurtTabs').html(html);
+        }
+
+        function selectCategory(category, elem) {
+            $('.muhurat-tab').removeClass('active');
+            $(elem).addClass('active');
+            const catMap = {
+                'वाहन': 'vehicle',
+                'संपत्ति': 'property',
+                'गृह प्रवेश': 'grihPravesh',
+                'विवाह': 'vivah',
+                'नामकरण': 'namkaran',
+                'अन्य': 'vehicle'
+            };
+            renderMuhurtContent(catMap[category] || 'vehicle');
+        }
+
+        function renderMuhurtContent(type) {
+            const events = calendarData.muhurat[type] || calendarData.muhurat.vehicle;
+            let html = '';
+            events.forEach(event => {
+                html += `<div style="text-align:center;padding:1rem 0;color:#7a7a7a;">${event.date}</div>
+                <div class="muhurat-card">
+                    <div class="muhurat-badge">
+                        <i class="fas fa-car"></i><span>VEHICLE BUYING</span>
+                    </div>
+                    <div class="muhurat-time">
+                        <div class="time-box">
+                            <div class="time-label">From</div>
+                            <div class="time-value-large">${event.from}</div>
+                        </div>
+                        <div class="time-box">
+                            <div class="time-label">To</div>
+                            <div class="time-value-large">${event.to}</div>
+                        </div>
+                    </div>
+                    <div class="muhurat-tags">
+                        ${event.tags.map(tag => `<div class="muhurat-tag"><i class="fas fa-star"></i><span>${tag}</span></div>`).join('')}
+                    </div>
+                </div>`;
+            });
+            $('#muhurtContent').html(html);
+        }
+    </script>
+</body>
+</html>

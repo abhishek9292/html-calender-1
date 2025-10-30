@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>भारत कैलेंडर - होम</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="navbar is-danger is-fixed-top">
+        <div class="navbar-brand">
+            <div class="navbar-item brand-logo">
+                <i class="fas fa-calendar-alt"></i>
+                <div class="brand-text"><span>भारत</span><span>कैलेंडर</span></div>
+            </div>
+            <div class="navbar-end header-icons">
+                <a class="navbar-item" onclick="navigateTo('shop')"><i class="fas fa-store"></i></a>
+                <a class="navbar-item" onclick="navigateTo('search')"><i class="fas fa-search"></i></a>
+                <a class="navbar-item" onclick="navigateTo('language')"><i class="fas fa-language"></i></a>
+                <a class="navbar-item" onclick="shareApp()"><i class="fas fa-share-nodes"></i></a>
+                <a class="navbar-item" id="menuBtn"><i class="fas fa-bars"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <div class="sidebar-ad">
+                <p class="has-text-warning" style="font-size:0.9rem;">आधिक प्रतिष्ठापन(Ad)</p>
+                <p style="font-weight:600;">Ludo Pro : King of Ludo Online</p>
+                <p style="font-size:0.85rem;">#1 Ludo online multiplayer game</p>
+                <button class="button is-danger is-fullwidth">इंस्टॉल</button>
+            </div>
+            <div class="menu-item" id="guestLogin">
+                <i class="fas fa-user"></i>
+                <div><p class="menu-title">Guest</p><p class="menu-subtitle">लॉग इन करें<br>बेहतर अनुभव के लिए</p></div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="menu-item" onclick="alert('चौघड़िया पृष्ठ जल्द ही')"><i class="fas fa-om has-text-danger"></i><span>चौघड़िया</span><i class="fas fa-chevron-right"></i></div>
+            <div class="menu-item is-success"><i class="fas fa-crown has-text-warning"></i><span>गेट प्रो</span><i class="fas fa-chevron-right"></i></div>
+            <div class="menu-item is-danger"><i class="fas fa-shopping-bag"></i><span>भारत भक्ति स्टोर</span><i class="fas fa-chevron-right"></i></div>
+            <div class="menu-item" onclick="alert('मदद जरूरत है')"><i class="fas fa-question-circle"></i><span>मदद जरूरत है</span></div>
+            <div class="menu-item" onclick="alert('सेटिंग्स')"><i class="fas fa-cog"></i><span>सेटिंग्स</span></div>
+            <div class="menu-item" onclick="alert('मौसम')"><i class="fas fa-cloud"></i><span>मौसम (मो)</span></div>
+            <div class="menu-item" onclick="shareApp()"><i class="fas fa-share-nodes"></i><span>शेयर</span></div>
+            <div class="menu-item" onclick="alert('अनुवाद सहायता')"><i class="fas fa-language"></i><span>अनुवाद करने में हमारी मदद करें</span></div>
+            <div class="menu-item" onclick="openInstagram()"><i class="fab fa-instagram"></i><span>इंस्टाग्राम</span></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container" id="mainContent">
+        <!-- Feature Icons -->
+        <div class="feature-icons">
+            <div class="feature-icon" onclick="navigateTo('calendar')">
+                <div class="icon-circle"><i class="fas fa-calendar-alt"></i></div>
+                <span>कैलेंडर</span>
+            </div>
+            <div class="feature-icon" onclick="navigateTo('muhurat')">
+                <div class="icon-circle"><i class="fas fa-om"></i></div>
+                <span>शुभ मुहूर्त</span>
+            </div>
+            <div class="feature-icon" onclick="navigateTo('tyohaar')">
+                <div class="icon-circle"><i class="fas fa-star"></i></div>
+                <span>त्योहार</span>
+            </div>
+            <div class="feature-icon" onclick="navigateTo('chuttiyaan')">
+                <div class="icon-circle"><i class="fas fa-umbrella-beach"></i></div>
+                <span>छुट्टियां</span>
+            </div>
+            <div class="feature-icon" onclick="navigateTo('kundali')">
+                <div class="icon-circle"><i class="fas fa-scroll"></i></div>
+                <span>कुण्डली</span>
+            </div>
+        </div>
+
+        <!-- Week Calendar -->
+        <div class="week-calendar" id="weekCalendar"></div>
+
+        <div style="text-align:center;padding:1rem;"><h2 class="section-title">आज पंचांग</h2></div>
+
+        <!-- Panchang Card -->
+        <div class="panchang-card" id="panchangCard"></div>
+
+        <!-- Trending Status -->
+        <div class="trending-section">
+            <h2 class="section-title">ट्रेंडिंग स्टेटस</h2>
+            <div class="trending-scroll" id="trendingGods"></div>
+
+            <h2 class="section-title">आज का राशिफल</h2>
+            <div class="trending-scroll" id="rashifalScroll"></div>
+        </div>
+    </div>
+
+    <!-- Plus Button Modal -->
+    <div class="modal" id="plusModal">
+        <div class="modal-background" onclick="closePlusModal()"></div>
+        <div class="modal-content plus-modal-content">
+            <div class="plus-option" onclick="alert('छुट्टियां जोड़ें')">
+                <i class="fas fa-umbrella-beach"></i><span>छुट्टियां</span>
+            </div>
+            <div class="plus-option" onclick="alert('नोट्स जोड़ें')">
+                <i class="fas fa-sticky-note"></i><span>नोट्स</span>
+            </div>
+            <div class="plus-option" onclick="alert('चेक लिस्ट')">
+                <i class="fas fa-check-square"></i><span>चेक लिस्ट</span>
+            </div>
+            <div class="plus-option" onclick="navigateTo('event')">
+                <i class="far fa-calendar"></i><span>इवेंट्स</span>
+            </div>
+            <div class="plus-option" onclick="alert('सामाजिक घटनाओं')">
+                <i class="fas fa-map-marker-alt"></i><span>सामाजिक घटनाओं</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a class="nav-item active" data-page="home" onclick="navigateTo('home')">
+            <i class="fas fa-home"></i><span>होम</span>
+        </a>
+        <a class="nav-item" data-page="calendar" onclick="navigateTo('calendar')">
+            <i class="fas fa-calendar"></i><span>कैलेंडर</span>
+        </a>
+        <a class="nav-item plus-btn" id="plusBtn"><i class="fas fa-plus"></i></a>
+        <a class="nav-item" data-page="music" onclick="navigateTo('music')">
+            <i class="fas fa-music"></i><span>म्यूजिक</span>
+        </a>
+        <a class="nav-item" data-page="ayojan" onclick="navigateTo('ayojan')">
+            <i class="fas fa-calendar-check"></i><span>आयोजन</span>
+        </a>
+    </nav>
+
+    <!-- Shopping Cart FAB -->
+    <button class="fab shopping-cart" onclick="alert('शॉपिंग कार्ट')"><i class="fas fa-shopping-cart"></i></button>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/calendar-data.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>

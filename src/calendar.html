@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>भारत कैलेंडर - कैलेंडर</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="calendar-header">
+        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+        <div class="calendar-title"><h1 class="title has-text-white" style="font-size:1rem;margin:0;">आज</h1></div>
+        <div style="display:flex;gap:1rem;">
+            <i class="fas fa-share-nodes" onclick="shareApp()" style="cursor:pointer;"></i>
+            <i class="fas fa-ellipsis-v" style="cursor:pointer;"></i>
+        </div>
+    </div>
+
+    <div class="calendar-nav">
+        <button class="nav-arrow" id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+        <div>
+            <div class="month-display">अंक° 25</div>
+            <div class="month-subtitle">आश्विन - कार्तिक</div>
+        </div>
+        <button class="nav-arrow" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <div class="day-tabs">
+        <div class="day-tab">रवि</div>
+        <div class="day-tab">सोम</div>
+        <div class="day-tab">मंगल</div>
+        <div class="day-tab">बुध</div>
+        <div class="day-tab">गुरु</div>
+        <div class="day-tab">शुक्र</div>
+        <div class="day-tab">शनि</div>
+    </div>
+
+    <div class="calendar-grid" id="calendarGrid"></div>
+
+    <div class="calendar-footer">
+        <div class="toggle-buttons">
+            <button class="toggle-btn active" id="holidayToggle">छुट्टियां</button>
+            <button class="toggle-btn" id="fastingToggle">उपवास के दिन</button>
+        </div>
+        <div class="holiday-list">
+            <div class="holiday-header">
+                <span>हिन्दू छुट्टियाँ</span>
+                <i class="fas fa-bell-slash"></i>
+            </div>
+            <div id="holidayList"></div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a class="nav-item" onclick="navigateTo('home')"><i class="fas fa-home"></i><span>होम</span></a>
+        <a class="nav-item active"><i class="fas fa-calendar"></i><span>कैलेंडर</span></a>
+        <a class="nav-item plus-btn" onclick="$('#plusModal').addClass('is-active')"><i class="fas fa-plus"></i></a>
+        <a class="nav-item" onclick="navigateTo('music')"><i class="fas fa-music"></i><span>म्यूजिक</span></a>
+        <a class="nav-item" onclick="navigateTo('ayojan')"><i class="fas fa-calendar-check"></i><span>आयोजन</span></a>
+    </nav>
+
+    <div class="modal" id="plusModal">
+        <div class="modal-background" onclick="$('#plusModal').removeClass('is-active')"></div>
+        <div class="modal-content plus-modal-content">
+            <div class="plus-option" onclick="alert('छुट्टियां')"><i class="fas fa-umbrella-beach"></i><span>छुट्टियां</span></div>
+            <div class="plus-option" onclick="alert('नोट्स')"><i class="fas fa-sticky-note"></i><span>नोट्स</span></div>
+            <div class="plus-option" onclick="alert('चेक लिस्ट')"><i class="fas fa-check-square"></i><span>चेक लिस्ट</span></div>
+            <div class="plus-option" onclick="navigateTo('event')"><i class="far fa-calendar"></i><span>इवेंट्स</span></div>
+            <div class="plus-option" onclick="alert('सामाजिक')"><i class="fas fa-map-marker-alt"></i><span>सामाजिक घटनाओं</span></div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/calendar-data.js"></script>
+    <script>
+        $(document).ready(function() {
+            renderCalendar();
+            renderHolidays();
+            $('#holidayToggle').click(function() {
+                $('.toggle-btn').removeClass('active');
+                $(this).addClass('active');
+                renderHolidays();
+            });
+            $('#fastingToggle').click(function() {
+                $('.toggle-btn').removeClass('active');
+                $(this).addClass('active');
+                alert('उपवास के दिन जल्द ही');
+            });
+        });
+
+        function renderCalendar() {
+            let html = '';
+            calendarData.dates.forEach(day => {
+                if (day.empty) {
+                    html += '<div class="calendar-cell"></div>';
+                } else {
+                    html += `<div class="calendar-cell ${day.today ? 'today' : ''} ${day.event ? 'holiday' : ''}">
+                        <span class="cell-date">${day.date}</span>
+                        <div class="cell-info">${day.tithi || ''}</div>
+                        <div class="cell-info">${day.time || ''}</div>
+                        ${day.event ? `<div class="cell-info" style="font-size:0.65rem;">${day.event}</div>` : ''}
+                    </div>`;
+                }
+            });
+            $('#calendarGrid').html(html);
+        }
+
+        function renderHolidays() {
+            let html = '';
+            calendarData.festivals.forEach(f => {
+                html += `<div class="holiday-item" onclick="alert('${f.name}')">
+                    <span class="holiday-date">${f.date} अक्टूबर</span>
+                    <span class="holiday-name">${f.name}</span>
+                    <i class="fas fa-arrow-right holiday-arrow"></i>
+                </div>`;
+            });
+            $('#holidayList').html(html);
+        }
+
+        function shareApp() { alert('शेयर करें'); }
+    </script>
+</body>
+</html>

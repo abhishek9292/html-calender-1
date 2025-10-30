@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>इवेंट बनाएं</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="calendar-header">
+        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
+        <div class="calendar-title"><h1 class="title has-text-white" style="font-size:1.1rem;margin:0;">नया इवेंट</h1></div>
+        <button class="back-btn" onclick="saveEvent()" style="background:none;border:none;color:#fff;font-weight:600;">सहेजें</button>
+    </div>
+
+    <div style="padding:1rem;">
+        <div class="field">
+            <label class="label">इवेंट का नाम</label>
+            <div class="control">
+                <input class="input" type="text" id="eventName" placeholder="इवेंट का नाम दर्ज करें">
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">तारीख</label>
+            <div class="control">
+                <input class="input" type="date" id="eventDate">
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">समय</label>
+            <div class="control">
+                <input class="input" type="time" id="eventTime">
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">स्थान</label>
+            <div class="control">
+                <input class="input" type="text" id="eventLocation" placeholder="स्थान दर्ज करें">
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">विवरण</label>
+            <div class="control">
+                <textarea class="textarea" id="eventDescription" placeholder="इवेंट का विवरण..." rows="4"></textarea>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">श्रेणी</label>
+            <div class="control">
+                <div class="select is-fullwidth">
+                    <select id="eventCategory">
+                        <option>व्यक्तिगत</option>
+                        <option>कार्य</option>
+                        <option>परिवार</option>
+                        <option>धार्मिक</option>
+                        <option>अन्य</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" id="eventReminder">
+                रिमाइंडर सेट करें
+            </label>
+        </div>
+
+        <button class="button is-danger is-fullwidth is-medium" onclick="saveEvent()" style="margin-top:1rem;">
+            <span class="icon"><i class="fas fa-save"></i></span>
+            <span>इवेंट सहेजें</span>
+        </button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/routes.js"></script>
+    <script>
+        $(document).ready(function() {
+            const today = new Date().toISOString().split('T')[0];
+            $('#eventDate').val(today);
+        });
+
+        function saveEvent() {
+            const name = $('#eventName').val();
+            const date = $('#eventDate').val();
+            const time = $('#eventTime').val();
+            const location = $('#eventLocation').val();
+            const description = $('#eventDescription').val();
+            const category = $('#eventCategory').val();
+            const reminder = $('#eventReminder').is(':checked');
+
+            if (!name || !date) {
+                alert('कृपया इवेंट का नाम और तारीख दर्ज करें');
+                return;
+            }
+
+            alert(`इवेंट सहेजा गया!\n\nनाम: ${name}\nतारीख: ${date}\nसमय: ${time}\nस्थान: ${location}\nश्रेणी: ${category}`);
+            goBack();
+        }
+    </script>
+</body>
+</html>

@@ -93,11 +93,13 @@ function getFullMonthData() {
 
 // Render calendar (week or full month)
 function renderCalendarView(data, isFullMonth) {
+    const weekDaysHeader = $('#weekCalendar .week-days');
     let html = '';
 
     if (isFullMonth) {
         // Full month grid view
         $('#weekCalendar').addClass('month-view');
+        weekDaysHeader.addClass('month-header-visible');
 
         data.forEach((day, index) => {
             if (index % 7 === 0) {
@@ -106,7 +108,6 @@ function renderCalendarView(data, isFullMonth) {
 
             html += `
                 <div class="date-card-wrapper">
-                    <div class="date-day-header">${day.day}</div>
                     <div class="date-card ${day.active ? 'active' : ''}" onclick="showDateDetails(${JSON.stringify(day).replace(/"/g, '&quot;')})">
                         <div class="date-number">
                             <div class="date-micro-top">${day.tithi}</div>
@@ -123,9 +124,13 @@ function renderCalendarView(data, isFullMonth) {
                 html += '</div>';
             }
         });
+
+        // Append month rows after week days header
+        weekDaysHeader.after(html);
     } else {
         // Week view
         $('#weekCalendar').removeClass('month-view');
+        weekDaysHeader.removeClass('month-header-visible');
 
         data.forEach(day => {
             html += `
@@ -143,9 +148,11 @@ function renderCalendarView(data, isFullMonth) {
                     </div>
                 </div>`;
         });
-    }
 
-    $('#weekCalendar').html(html);
+        // Replace everything after week days header with week view cards
+        weekDaysHeader.nextAll().remove();
+        weekDaysHeader.after(html);
+    }
 }
 
 // Toggle calendar view
@@ -325,8 +332,9 @@ function showRashifalDetails(index) {
     $('#rashifalDetails').html(detailsHtml);
 }
 
-// Make selectRashi available globally
+// Make functions available globally
 window.selectRashi = selectRashi;
+window.toggleCalendarView = toggleCalendarView;
 
 // Choghadiya Section
 function renderChoghadiya() {

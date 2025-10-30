@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>लॉग इन - भारत कैलेंडर</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f14668 0%, #cc2f49 100%);
+        }
+        .login-box {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            max-width: 420px;
+            width: 100%;
+            margin: 1rem;
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .login-header i {
+            font-size: 3rem;
+            color: #f14668;
+            margin-bottom: 1rem;
+        }
+        .login-header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #363636;
+        }
+        .login-header p {
+            font-size: 0.9rem;
+            color: #7a7a7a;
+        }
+        .field {
+            margin-bottom: 1.5rem;
+        }
+        .button.is-danger {
+            background: #f14668;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+        .register-link a {
+            color: #f14668;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <i class="fas fa-calendar-alt"></i>
+                <h1>भारत कैलेंडर</h1>
+                <p>अपने खाते में लॉग इन करें</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="field">
+                    <label class="label">यूज़रनेम</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="text" id="username" placeholder="यूज़रनेम डालें" required>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">पासवर्ड</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="password" id="password" placeholder="पासवर्ड डालें" required>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox" id="remember">
+                            मुझे याद रखें
+                        </label>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <button class="button is-danger is-fullwidth" type="submit">
+                        <span class="icon"><i class="fas fa-sign-in-alt"></i></span>
+                        <span>लॉग इन</span>
+                    </button>
+                </div>
+
+                <div id="errorMessage" class="notification is-danger is-light" style="display:none;"></div>
+            </form>
+
+            <div class="register-link">
+                <p>खाता नहीं है? <a href="#" onclick="showRegister(); return false;">अभी रजिस्टर करें</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        const API_URL = 'http://localhost:5090/api';
+
+        $('#loginForm').submit(async function(e) {
+            e.preventDefault();
+
+            const username = $('#username').val();
+            const password = $('#password').val();
+
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Save user info
+                    localStorage.setItem('user', JSON.stringify(data.user));
+
+                    // Redirect based on role
+                    if (data.user.role === 'admin') {
+                        window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = 'index.html';
+                    }
+                } else {
+                    $('#errorMessage').text(data.error || 'लॉग इन विफल').show();
+                }
+            } catch (error) {
+                $('#errorMessage').text('सर्वर से कनेक्ट नहीं हो पा रहा। कृपया बाद में पुन: प्रयास करें।').show();
+            }
+        });
+
+        function showRegister() {
+            alert('रजिस्ट्रेशन पेज जल्द ही उपलब्ध होगा');
+        }
+    </script>
+</body>
+</html>

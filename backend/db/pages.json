@@ -1,0 +1,28 @@
+{
+  "pages": [
+    {
+      "id": "home",
+      "title": "होम",
+      "slug": "home",
+      "sections": [],
+      "active": true,
+      "created": "2025-01-15T10:00:00Z"
+    },
+    {
+      "id": "calendar",
+      "title": "कैलेंडर",
+      "slug": "calendar",
+      "sections": [],
+      "active": true,
+      "created": "2025-01-15T10:00:00Z"
+    },
+    {
+      "id": "shop",
+      "title": "शॉप",
+      "slug": "shop",
+      "sections": [],
+      "active": true,
+      "created": "2025-01-15T10:00:00Z"
+    }
+  ]
+}

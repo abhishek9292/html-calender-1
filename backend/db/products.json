@@ -1,0 +1,37 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "भारत कैलेंडर 2025 - प्रिंट एडिशन",
+      "description": "पूर्ण हिंदी पंचांग के साथ प्रीमियम प्रिंटेड कैलेंडर",
+      "price": 299,
+      "image": "/images/products/calendar-2025.jpg",
+      "category": "calendar",
+      "stock": 100,
+      "active": true,
+      "created": "2025-01-15T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "रुद्राक्ष माला",
+      "description": "प्रामाणिक पांच मुखी रुद्राक्ष की माला",
+      "price": 499,
+      "image": "/images/products/rudraksha.jpg",
+      "category": "religious",
+      "stock": 50,
+      "active": true,
+      "created": "2025-01-15T10:00:00Z"
+    },
+    {
+      "id": 3,
+      "name": "पूजा थाली सेट",
+      "description": "कॉपर पूजा थाली पूर्ण सेट के साथ",
+      "price": 799,
+      "image": "/images/products/pooja-thali.jpg",
+      "category": "religious",
+      "stock": 30,
+      "active": true,
+      "created": "2025-01-15T10:00:00Z"
+    }
+  ]
+}

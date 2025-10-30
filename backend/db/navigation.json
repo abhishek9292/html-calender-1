@@ -1,0 +1,13 @@
+{
+  "mainNav": [
+    {"id": "home", "label": "होम", "link": "home", "icon": "fa-home", "order": 1, "active": true},
+    {"id": "calendar", "label": "कैलेंडर", "link": "calendar", "icon": "fa-calendar", "order": 2, "active": true},
+    {"id": "music", "label": "म्यूजिक", "link": "music", "icon": "fa-music", "order": 3, "active": true},
+    {"id": "ayojan", "label": "आयोजन", "link": "ayojan", "icon": "fa-calendar-check", "order": 4, "active": true}
+  ],
+  "sidebar": [
+    {"id": "choghadiya", "label": "चौघड़िया", "link": "choghadiya", "icon": "fa-om", "order": 1, "active": true},
+    {"id": "shop", "label": "भारत भक्ति स्टोर", "link": "shop", "icon": "fa-shopping-bag", "order": 2, "active": true},
+    {"id": "settings", "label": "सेटिंग्स", "link": "settings", "icon": "fa-cog", "order": 3, "active": true}
+  ]
+}

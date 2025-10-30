@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>चेकआउट - भारत कैलेंडर</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body { padding-top: 65px; padding-bottom: 2rem; background: #f5f5f5; }
+        .checkout-container { max-width: 600px; margin: 0 auto; padding: 1rem; }
+        .section-box { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .order-item { display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid #f5f5f5; }
+        .payment-option { padding: 1rem; border: 2px solid #dbdbdb; border-radius: 8px; margin-bottom: 0.75rem; cursor: pointer; transition: all 0.2s; }
+        .payment-option:hover { border-color: #f14668; }
+        .payment-option.selected { border-color: #f14668; background: #fff0f3; }
+        .payment-option input[type="radio"] { margin-right: 0.75rem; }
+        .total-row { display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 700; color: #f14668; padding-top: 1rem; border-top: 2px solid #f14668; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="navbar is-danger is-fixed-top">
+        <div class="navbar-brand">
+            <div class="navbar-item" onclick="history.back()" style="cursor: pointer;">
+                <i class="fas fa-arrow-left" style="font-size: 1.5rem;"></i>
+            </div>
+            <div class="navbar-item brand-logo">
+                <i class="fas fa-shopping-bag"></i>
+                <div class="brand-text"><span>चेकआउट</span></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="checkout-container">
+        <!-- Order Summary -->
+        <div class="section-box">
+            <div class="section-title">
+                <i class="fas fa-clipboard-list"></i>
+                ऑर्डर समरी
+            </div>
+            <div id="orderSummary"></div>
+            <div class="total-row">
+                <span>कुल राशि:</span>
+                <span id="totalAmount">₹0</span>
+            </div>
+        </div>
+
+        <!-- Shipping Address -->
+        <div class="section-box">
+            <div class="section-title">
+                <i class="fas fa-map-marker-alt"></i>
+                डिलीवरी एड्रेस
+            </div>
+            <div class="field">
+                <label class="label">पूरा नाम</label>
+                <input class="input" type="text" id="fullName" placeholder="आपका नाम" required>
+            </div>
+            <div class="field">
+                <label class="label">फोन नंबर</label>
+                <input class="input" type="tel" id="phone" placeholder="10 अंकों का नंबर" required>
+            </div>
+            <div class="field">
+                <label class="label">पता</label>
+                <textarea class="textarea" id="address" placeholder="मकान नंबर, इलाका, शहर" rows="3" required></textarea>
+            </div>
+            <div class="field">
+                <label class="label">पिनकोड</label>
+                <input class="input" type="text" id="pincode" placeholder="6 अंक" maxlength="6" required>
+            </div>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="section-box">
+            <div class="section-title">
+                <i class="fas fa-credit-card"></i>
+                पेमेंट मेथड
+            </div>
+
+            <div class="payment-option selected" onclick="selectPayment('cod')">
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                    <input type="radio" name="payment" value="cod" checked>
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 0.25rem;">
+                            <i class="fas fa-money-bill-wave"></i> कैश ऑन डिलीवरी (COD)
+                        </div>
+                        <div style="font-size: 0.85rem; color: #7a7a7a;">डिलीवरी के समय नकद भुगतान करें</div>
+                    </div>
+                </label>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('card')">
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                    <input type="radio" name="payment" value="card">
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 0.25rem;">
+                            <i class="fas fa-credit-card"></i> क्रेडिट / डेबिट कार्ड
+                        </div>
+                        <div style="font-size: 0.85rem; color: #7a7a7a;">सुरक्षित ऑनलाइन भुगतान</div>
+                    </div>
+                </label>
+            </div>
+
+            <div class="payment-option" onclick="selectPayment('upi')">
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                    <input type="radio" name="payment" value="upi">
+                    <div>
+                        <div style="font-weight: 600; margin-bottom: 0.25rem;">
+                            <i class="fas fa-mobile-alt"></i> UPI Payment
+                        </div>
+                        <div style="font-size: 0.85rem; color: #7a7a7a;">Google Pay, PhonePe, Paytm</div>
+                    </div>
+                </label>
+            </div>
+
+            <!-- Card Details (Hidden by default) -->
+            <div id="cardDetails" style="display: none; margin-top: 1rem; padding: 1rem; background: #f9f9f9; border-radius: 8px;">
+                <div class="field">
+                    <label class="label">कार्ड नंबर</label>
+                    <input class="input" type="text" placeholder="1234 5678 9012 3456" maxlength="19">
+                </div>
+                <div class="columns">
+                    <div class="column">
+                        <label class="label">Expiry</label>
+                        <input class="input" type="text" placeholder="MM/YY" maxlength="5">
+                    </div>
+                    <div class="column">
+                        <label class="label">CVV</label>
+                        <input class="input" type="text" placeholder="123" maxlength="3">
+                    </div>
+                </div>
+            </div>
+
+            <!-- UPI Details (Hidden by default) -->
+            <div id="upiDetails" style="display: none; margin-top: 1rem; padding: 1rem; background: #f9f9f9; border-radius: 8px;">
+                <div class="field">
+                    <label class="label">UPI ID</label>
+                    <input class="input" type="text" placeholder="yourname@upi">
+                </div>
+            </div>
+        </div>
+
+        <!-- Place Order Button -->
+        <button class="button is-danger is-fullwidth is-large" onclick="placeOrder()">
+            <i class="fas fa-check-circle"></i>&nbsp; ऑर्डर प्लेस करें
+        </button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/checkout.js"></script>
+</body>
+</html>
